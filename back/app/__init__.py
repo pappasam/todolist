@@ -21,6 +21,10 @@ def create_app(config_name):
     for extension in ext.values():
         extension.init_app(app)
 
+    from .views import resources
+    for url, resource in resources.items():
+        ext['api'].add_resource(resource, url)
+
     # Attach all Blueprints
     # from .services import blueprints_all
     # for blueprint in blueprints_all:
