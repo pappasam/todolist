@@ -1,0 +1,10 @@
+# Vim
+*.swp
+
+# Python
+__pycache__/
+venv/
+*.pyc
+
+# Javascript
+node_modules/
