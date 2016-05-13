@@ -1,6 +1,6 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from run import app
+from application import app
 from app.extensions import ext
 
 db = ext['db']

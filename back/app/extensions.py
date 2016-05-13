@@ -4,5 +4,5 @@ from flask_restful import Api
 
 # Initialize extensions
 ext = OrderedDict()
-ext['db'] = SqlAlchemy()
+ext['db'] = SQLAlchemy()
 ext['api'] = Api()

@@ -3,7 +3,7 @@ import flask_restful
 from collections import OrderedDict
 from flask_restful import Api, Resource
 from flask import jsonify, request
-from SQLAlchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError
 
 from .extensions import ext
 from .models import Notes, NotesSchema
@@ -32,5 +32,5 @@ class ApiNotes(Resource):
         note_json = self.schema.dump(notes_entry).data
         return jsonify({"note": note_json})
 
-resources = OrderedDict
+resources = OrderedDict()
 resources['/notes'] = ApiNotes
