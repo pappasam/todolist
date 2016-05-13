@@ -8,3 +8,7 @@ venv/
 
 # Javascript
 node_modules/
+
+# Database
+*.db
+migrations/
