@@ -14,6 +14,5 @@ class ConfigBase(object):
         pass
 
 config = {
-    'base': ConfigBase,
     'default': ConfigBase,
 }
