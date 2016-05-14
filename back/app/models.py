@@ -9,15 +9,18 @@ class Notes(db.Model):
     id = db.Column(
         db.Integer(), primary_key=True, autoincrement=True, nullable=False
     )
-    content = db.Column(db.Text(), nullable=False)
+    text = db.Column(db.Text(), nullable=False)
+    completed = db.Column(db.Boolean(), nullable=False)
 
-    def __init__(self, content):
-        self.content = content
+    def __init__(self, text, completed):
+        self.text = text
+        self.completed = completed
 
     def __repr__(self):
-        return "<Notes {} {}>".format(self.id, self.content[:8])
+        template = "<Notes {}:{}:{}>"
+        return template.format(self.id, self.completed, self.text[:8])
 
 class NotesSchema(Schema):
 
     class Meta:
-        fields = ('id', 'content')
+        fields = ('id', 'text', 'completed')
