@@ -16,8 +16,8 @@ def getbool(d, k, default):
     '''
     v = d.get(k, None)
     vc = (  # val-condition
-        (v, lambda: isinstance(v, bool)),
         (v == 'true', lambda: v in ('true', 'false')),
+        (v, lambda: isinstance(v, bool)),
         (default, lambda: True),
     )
     return next(it.dropwhile(lambda t: not t[1](), vc))[0]
