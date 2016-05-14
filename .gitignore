@@ -8,6 +8,7 @@ venv/
 
 # Javascript
 node_modules/
+build/
 
 # Database
 *.db
