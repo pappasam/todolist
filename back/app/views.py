@@ -1,7 +1,7 @@
 import flask_restful
 
 from collections import OrderedDict
-from flask_restful import Api, Resource
+from flask_restful import Api, Resource, reqparse, inputs
 from flask import jsonify, request
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -11,7 +11,26 @@ from .utils import getbool
 
 db = ext['db']
 
-class ApiNotes(Resource):
+class NotesParser(object):
+    '''Parser arguments for Notes api'''
+
+    parser_post = reqparse.RequestParser(bundle_errors=True)
+    parser_post.add_argument(
+        'completed', type=inputs.boolean,
+        required=True, location='json'
+    )
+    parser_post.add_argument(
+        'text', type=str,
+        required=True, location='json'
+    )
+
+    parser_patch = parser_post.copy()
+    parser_patch.add_argument(
+        'id', type=int,
+        required=True, location='json'
+    )
+
+class NotesApi(Resource, NotesParser):
     '''Operations on note data'''
 
     schema = NotesSchema()
@@ -30,15 +49,10 @@ class ApiNotes(Resource):
 
         Return json value for the note's value
         '''
-        js_data = request.get_json(force=True)
-        # Begin Mutation
-        js_data['completed'] = getbool(js_data, 'completed', False)
-        # End Mutation
-        notes_entry = Notes(**js_data)
-        # Begin Mutation
+        args = self.parser_post.parse_args()
+        notes_entry = Notes(**args)
         db.session.add(notes_entry)
         db.session.commit()
-        # End Mutation
         note_json = self.schema.dump(notes_entry).data
         return jsonify(response='ok', data={"note": note_json})
 
@@ -47,14 +61,12 @@ class ApiNotes(Resource):
 
         Return json value for old note's value
         '''
-        js_data = request.get_json(force=True)
-        note = Notes.query.filter_by(id=js_data['id']).first()
-        # Begin Mutation
-        note.text = js_data.get('text', note.text)
-        note.completed = getbool(js_data, 'completed', note.completed)
-        db.session.commit()
-        # End Mutation
+        args = self.parser_patch.parse_args()
+        note = Notes.query.filter_by(id=args['id']).first()
+        note.text = args['text']  # Mutation begin
+        note.completed = args['completed']
+        db.session.commit()  # Mutation end
         return jsonify(response='ok')
 
 resources = OrderedDict()
-resources['/notes'] = ApiNotes
+resources['/notes'] = NotesApi
