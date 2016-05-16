@@ -1,13 +1,12 @@
+import os
 import flask_restful
 
-from collections import OrderedDict
-from flask_restful import Api, Resource, reqparse, inputs
 from flask import jsonify, request
+from flask_restful import Resource, reqparse, inputs
 from sqlalchemy.exc import SQLAlchemyError
 
-from .extensions import ext
-from .models import Notes, NotesSchema
-from .utils import getbool
+from ...common.extensions import ext
+from ...common.models import Notes, NotesSchema
 
 db = ext['db']
 
@@ -67,6 +66,3 @@ class NotesApi(Resource, NotesParser):
         note.completed = args['completed']
         db.session.commit()  # Mutation end
         return jsonify(response='ok')
-
-resources = OrderedDict()
-resources['/notes'] = NotesApi

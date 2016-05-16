@@ -17,21 +17,14 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     # Attach extensions
-    from .extensions import ext
-    from .views import resources
-
-    for url, resource in resources.items():
-        # API mapping must take place before API is associated with app
-        ext['api'].add_resource(resource, url)
-
+    from .common.extensions import ext
     for extension in ext.values():
         extension.init_app(app)
 
-
     # Attach all Blueprints
-    # from .services import blueprints_all
-    # for blueprint in blueprints_all:
-    #     app.register_blueprint(blueprint)
+    from .resources import blueprints_all
+    for blueprint in blueprints_all:
+        app.register_blueprint(blueprint)
 
     # Force url_for to choose either http or https
     scheme = app.config['PREFERRED_URL_SCHEME']
