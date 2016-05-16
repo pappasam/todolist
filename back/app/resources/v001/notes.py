@@ -1,9 +1,7 @@
-import os
-import flask_restful
+'''Organize Notes API methods'''
 
-from flask import jsonify, request
+from flask import jsonify
 from flask_restful import Resource, reqparse, inputs
-from sqlalchemy.exc import SQLAlchemyError
 
 from ...common.extensions import ext
 from ...common.models import Notes, NotesSchema
