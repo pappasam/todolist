@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import Todo from './Todo';
+import React, { PropTypes } from 'react'
+import Todo from './Todo'
 
 const TodoList = ({ todos, onTodoClick }) => (
   <ul>
@@ -12,7 +12,7 @@ const TodoList = ({ todos, onTodoClick }) => (
         />
     )}
   </ul>
-);
+)
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(
@@ -23,6 +23,6 @@ TodoList.propTypes = {
     }).isRequired
   ).isRequired,
   onTodoClick: PropTypes.func.isRequired
-};
+}
 
-export default TodoList;
+export default TodoList

@@ -9,6 +9,8 @@ venv/
 # Javascript
 node_modules/
 build/
+npm-debug.log
+.eslintcache
 
 # Database
 *.db

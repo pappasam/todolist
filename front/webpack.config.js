@@ -1,12 +1,12 @@
-const path = require('path');
-const merge = require('webpack-merge');
-const webpack = require('webpack');
+const path = require('path')
+const merge = require('webpack-merge')
+const webpack = require('webpack')
 
-const TARGET = process.env.npm_lifecycle_event;
+const TARGET = process.env.npm_lifecycle_event
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
-};
+}
 
 const common = {
   entry: {
@@ -32,7 +32,7 @@ const common = {
       }
     ]
   }
-};
+}
 
 if (TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
@@ -50,9 +50,9 @@ if (TARGET === 'start' || !TARGET) {
     plugins: [
       new webpack.HotModuleReplacementPlugin()
     ]
-  });
+  })
 }
 
-if (TARGET == 'build') {
-  module.exports = merge(common, {});
+if (TARGET === 'build') {
+  module.exports = merge(common, {})
 }
